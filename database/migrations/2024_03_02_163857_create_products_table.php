@@ -19,6 +19,11 @@ return new class extends Migration
             $table->string('description');
             $table->string('category');
             $table->integer('stock');
+            $table->string('manufacturer');
+            $table->string('model_number')->nullable();
+            $table->integer('warranty_months')->default(0);
+            $table->decimal('weight', 8, 2)->nullable();
+            $table->string('dimensions')->nullable();
             $table->timestamps();
         });
     }

@@ -20,8 +20,6 @@ return new class extends Migration
             $table->integer('months_rented');
             $table->enum('status_payment', ['pending', 'paid', 'failed'])->default('pending');
             $table->enum('status_product', ['pending', 'rented', 'returned'])->default('rented');
-            $table->string('xendit_id', 50)->nullable();
-            $table->foreign('xendit_id')->references('id')->on('xendit_logs')->onDelete('cascade');
             $table->timestamps();
         });
     }

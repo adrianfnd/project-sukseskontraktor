@@ -26,6 +26,14 @@ class ProductController extends Controller
             'name' => 'required|string',
             'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'nullable|string',
+            'category' => 'required|string',
+            'stock' => 'required|numeric',
+            'manufacturer' => 'required|string',
+            'model_number' => 'nullable|string',
+            'warranty_months' => 'required|numeric',
+            'weight' => 'nullable|numeric',
+            'dimensions' => 'nullable|string',
         ]);
 
         $imageName = $this->uploadImage($request->file('image'));
@@ -55,6 +63,14 @@ class ProductController extends Controller
             'name' => 'required|string',
             'price' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'description' => 'nullable|string',
+            'category' => 'required|string',
+            'stock' => 'required|numeric',
+            'manufacturer' => 'required|string',
+            'model_number' => 'nullable|string',
+            'warranty_months' => 'required|numeric',
+            'weight' => 'nullable|numeric',
+            'dimensions' => 'nullable|string',
         ]);
 
         $product = Product::findOrFail($id);

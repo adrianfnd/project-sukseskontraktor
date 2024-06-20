@@ -16,8 +16,7 @@ class Order extends Model
         'customer_phone', 
         'months_rented', 
         'status_payment',
-        'status_product',
-        'xendit_id'
+        'status_product'
     ];
 
     public function product()

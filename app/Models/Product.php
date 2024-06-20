@@ -15,7 +15,12 @@ class Product extends Model
         'image_url', 
         'description', 
         'category', 
-        'stock'
+        'stock',
+        'manufacturer',
+        'model_number',
+        'warranty_months',
+        'weight',
+        'dimensions',
     ];
 
     public function orders()
