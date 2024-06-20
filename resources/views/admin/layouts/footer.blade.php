@@ -4,4 +4,4 @@
             Copyright &copy; 2024 CV.Surya Abadi All rights reserved | Made by Radhi Farizka
         </p>
     </center>
-</footer> 
+</footer>
