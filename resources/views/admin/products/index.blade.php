@@ -19,23 +19,6 @@
                                         </p>
                                     </div>
                                 </div>
-                                @if (session('success'))
-                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        {{ session('success') }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                @endif
-
-                                @if (session('error'))
-                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                        {{ session('error') }}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                @endif
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
@@ -66,11 +49,12 @@
                                                             <a href="{{ route('edit-product', $product->id) }}"
                                                                 class="btn btn-warning">Edit</a>
                                                             <form action="{{ route('delete-product', $product->id) }}"
-                                                                method="POST" style="display: inline;">
+                                                                method="POST" style="display: inline;"
+                                                                id="delete-form-{{ $product->id }}">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button type="submit" class="btn btn-danger"
-                                                                    onclick="return confirm('Are you sure?')">Delete</button>
+                                                                <button type="button" class="btn btn-danger delete-btn"
+                                                                    data-id="{{ $product->id }}">Delete</button>
                                                             </form>
                                                         </center>
                                                     </td>
@@ -84,4 +68,47 @@
                     </div>
                 </div>
             </div>
-        @endsection
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productId = this.getAttribute('data-id');
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById('delete-form-' + productId).submit();
+                        }
+                    });
+                });
+            });
+
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: "{{ session('success') }}",
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "{{ session('error') }}",
+                });
+            @endif
+        });
+    </script>
+@endsection

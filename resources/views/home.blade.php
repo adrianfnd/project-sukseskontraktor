@@ -101,12 +101,16 @@
                         <div class="block2">
                             <div class="block2-pic hov-img0">
                                 <img src="/assets/products/{{ $product->image_url }}" alt="IMG-PRODUCT">
-
                                 <a href="#"
                                     class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
                                     style="margin: auto; text-align: center;" data-toggle="modal" data-target="#orderModal"
                                     data-id="{{ $product->id }}" data-nama="{{ $product->name }}"
-                                    data-harga="{{ $product->price }}">
+                                    data-harga="{{ $product->price }}" data-category="{{ $product->category }}"
+                                    data-description="{{ $product->description }}" data-stock="{{ $product->stock }}"
+                                    data-manufacturer="{{ $product->manufacturer }}"
+                                    data-model-number="{{ $product->model_number }}"
+                                    data-warranty="{{ $product->warranty_months }}" data-weight="{{ $product->weight }}"
+                                    data-dimensions="{{ $product->dimensions }}">
                                     Pesan Sekarang
                                 </a>
                             </div>
@@ -146,8 +150,24 @@
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
+                                <label for="product-details">Detail Produk</label>
+                                <div id="product-details">
+                                    <p><strong>Nama Produk:</strong> <span id="product-name"></span></p>
+                                    <p><strong>Harga:</strong> <span id="product-price"></span>/Bulan</p>
+                                    <p><strong>Kategori:</strong> <span id="product-category"></span></p>
+                                    <p><strong>Deskripsi:</strong> <span id="product-description"></span></p>
+                                    <p><strong>Stok:</strong> <span id="product-stock"></span></p>
+                                    <p><strong>Manufaktur:</strong> <span id="product-manufacturer"></span></p>
+                                    <p><strong>Nomor Model:</strong> <span id="product-model-number"></span></p>
+                                    <p><strong>Garansi:</strong> <span id="product-warranty"></span> bulan</p>
+                                    <p><strong>Berat:</strong> <span id="product-weight"></span> kg</p>
+                                    <p><strong>Dimensi:</strong> <span id="product-dimensions"></span></p>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="customer-name">Nama</label>
-                                <input type="text" class="form-control" id="customer-name" name="customer_name" required>
+                                <input type="text" class="form-control" id="customer-name" name="customer_name"
+                                    required>
                             </div>
                             <div class="form-group">
                                 <label for="customer-email">Email</label>
@@ -164,10 +184,6 @@
                                 <div class="status-item" data-value="6">6 Bulan</div>
                                 <div class="status-item" data-value="12">1 Tahun</div>
                                 <input type="hidden" name="months_rented" id="days-rented" value="3">
-                            </div>
-                            <div class="form-group">
-                                <label for="product-details">Detail Produk</label>
-                                <p id="product-details"></p>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -215,13 +231,32 @@
                         var productId = button.getAttribute('data-id');
                         var productName = button.getAttribute('data-nama');
                         var productPrice = button.getAttribute('data-harga');
+                        var productCategory = button.getAttribute('data-category');
+                        var productDescription = button.getAttribute('data-description');
+                        var productStock = button.getAttribute('data-stock');
+                        var productManufacturer = button.getAttribute('data-manufacturer');
+                        var productModelNumber = button.getAttribute('data-model-number');
+                        var productWarranty = button.getAttribute('data-warranty');
+                        var productWeight = button.getAttribute('data-weight');
+                        var productDimensions = button.getAttribute('data-dimensions');
 
                         var productIdInput = document.getElementById('product-id');
                         productIdInput.value = productId;
 
-                        var productDetails = document.getElementById('product-details');
-                        productDetails.textContent = 'Nama Produk: ' + productName + ', Harga: Rp ' +
-                            Number(productPrice).toLocaleString() + '/Bulan';
+                        document.getElementById('product-name').textContent = productName;
+                        document.getElementById('product-price').textContent = 'Rp ' + Number(
+                            productPrice).toLocaleString();
+                        document.getElementById('product-category').textContent = productCategory;
+                        document.getElementById('product-description').textContent = productDescription;
+                        document.getElementById('product-stock').textContent = productStock;
+                        document.getElementById('product-manufacturer').textContent =
+                            productManufacturer;
+                        document.getElementById('product-model-number').textContent =
+                            productModelNumber || 'N/A';
+                        document.getElementById('product-warranty').textContent = productWarranty;
+                        document.getElementById('product-weight').textContent = productWeight || 'N/A';
+                        document.getElementById('product-dimensions').textContent = productDimensions ||
+                            'N/A';
 
                         $('#orderModal').modal('show');
                     });
