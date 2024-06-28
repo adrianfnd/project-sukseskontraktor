@@ -45,9 +45,14 @@
                 </ul>
             </nav>
             <!-- partial -->
-            @yield('content')
+            <div class="main-panel">
+                @yield('content')
+                {{-- footer  --}}
+                <br>
+                <br>
+                @include('.admin.layouts.footer')
+            </div>
             <!-- content-wrapper ends -->
-            @include('.admin.layouts.footer')
         </div>
         <!-- main-panel ends -->
     </div>
