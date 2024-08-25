@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Product::with(['creator', 'updater'])->get();
         return view('admin.products.index', compact('products'));
     }
 
@@ -40,6 +40,8 @@ class ProductController extends Controller
 
         $product = new Product($request->except('image'));
         $product->image_url = $imageName;
+        $product->created_by = Auth::id();
+        $product->updated_by = Auth::id();
         $product->save();
 
         return redirect()->route('product')->with('success', 'Product created successfully!');
@@ -47,7 +49,7 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        $product = Product::with(['creator', 'updater'])->findOrFail($id);
         return view('admin.products.detail', compact('product'));
     }
 
@@ -82,7 +84,9 @@ class ProductController extends Controller
             $product->image_url = $imageName;
         }
 
-        $product->update($request->except('image'));
+        $product->fill($request->except('image'));
+        $product->updated_by = Auth::id();
+        $product->save();
 
         return redirect()->route('product')->with('success', 'Product updated successfully!');
     }
