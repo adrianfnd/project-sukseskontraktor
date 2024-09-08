@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('image_url');
             $table->string('description');
             $table->string('category');
-            $table->integer('stock');
+            $table->integer('available_stock');
             $table->string('manufacturer');
             $table->string('model_number')->nullable();
             $table->integer('warranty_months')->default(0);

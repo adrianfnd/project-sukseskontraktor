@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->foreignId('created_by')->nullable()->constrained('users')->after('dimensions');
             $table->foreignId('updated_by')->nullable()->constrained('users')->after('created_by');
+            $table->string('code')->unique()->nullable()->after('id');
         });
     }
 
@@ -23,6 +24,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('products', function (Blueprint $table) {
+            $table->dropForeign(['code']);
+            $table->dropColumn('code');
             $table->dropForeign(['created_by']);
             $table->dropColumn('created_by');
             $table->dropForeign(['updated_by']);

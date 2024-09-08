@@ -10,6 +10,10 @@
                         <div class="card-body">
                             <form method="POST" action="{{ route('store-product') }}" enctype="multipart/form-data">
                                 @csrf
+                                <div class="form-group">
+                                    <label for="code">Product Code:</label>
+                                    <input type="text" class="form-control" id="code" name="code" readonly>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="name">Product Name:</label>
@@ -45,11 +49,14 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="stock">Stock:</label>
-                                    <input type="number" class="form-control" id="stock" name="stock" required>
+                                    <label for="available_stock">Stock:</label>
+                                    <select class="form-control" id="available_stock" name="available_stock" required>
+                                        <option value="1">Tersedia</option>
+                                        <option value="0">Tidak Tersedia</option>
+                                    </select>
                                 </div>
-                                @if ($errors->has('stock'))
-                                    <p class="text-danger">{{ $errors->first('stock') }}</p>
+                                @if ($errors->has('available_stock'))
+                                    <p class="text-danger">{{ $errors->first('available_stock') }}</p>
                                 @endif
 
                                 <div class="form-group">
@@ -114,4 +121,14 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function generateProductCode() {
+                return 'PROD-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            }
+
+            document.getElementById('code').value = generateProductCode();
+        });
+    </script>
 @endsection

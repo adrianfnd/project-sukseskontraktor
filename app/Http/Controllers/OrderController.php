@@ -31,8 +31,8 @@ class OrderController extends Controller
 
             $product = Product::findOrFail($request->product_id);
     
-            if ($product->stock < 1) {
-                return redirect()->back()->with('error', 'Stock not sufficient.');
+            if ($product->available_stock < 1) {
+                return redirect()->back()->with('error', 'Not available.');
             }
 
             $order = new Order();
@@ -88,7 +88,7 @@ class OrderController extends Controller
             $order->save();
 
             $product = Product::findOrFail($product_id);
-            $product->stock -= 1;
+            $product->available_stock = 0;
             $product->save();
 
             return redirect()->back()->with('success', 'Order success!');

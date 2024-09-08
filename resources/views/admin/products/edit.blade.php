@@ -12,6 +12,11 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
+                                <div class="form-group">
+                                    <label for="code">Product Code:</label>
+                                    <input type="text" class="form-control" id="code" name="code"
+                                        value="{{ $product->code }}" readonly>
+                                </div>
 
                                 <div class="form-group">
                                     <label for="name">Product Name:</label>
@@ -49,11 +54,16 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <label for="stock">Stock:</label>
-                                    <input type="number" class="form-control" id="stock" name="stock"
-                                        value="{{ $product->stock }}" required>
+                                    <label for="available_stock">Stock:</label>
+                                    <select class="form-control" id="available_stock" name="available_stock" required>
+                                        <option value="1" {{ $product->available_stock > 0 ? 'selected' : '' }}>
+                                            Tersedia</option>
+                                        <option value="0" {{ $product->available_stock <= 0 ? 'selected' : '' }}>Tidak
+                                            Tersedia</option>
+                                    </select>
                                 </div>
-                                @if ($errors->has('stock'))
+
+                                @if ($errors->has('available_stock'))
                                     <p class="text-danger">{{ $errors->first('stock') }}</p>
                                 @endif
 

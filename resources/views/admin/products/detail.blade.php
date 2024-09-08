@@ -9,6 +9,11 @@
                         <h4 class="card-title">Product Details</h4>
                         <div class="card-body">
                             <div class="form-group">
+                                <label>Product Code:</label>
+                                <p>{{ $product->code }}</p>
+                            </div>
+
+                            <div class="form-group">
                                 <label>Product Name:</label>
                                 <p>{{ $product->name }}</p>
                             </div>
@@ -30,7 +35,13 @@
 
                             <div class="form-group">
                                 <label>Stock:</label>
-                                <p>{{ $product->stock }}</p>
+                                <p>
+                                    @if ($product->available_stock > 0)
+                                        Tersedia
+                                    @else
+                                        Tidak Tersedia
+                                    @endif
+                                </p>
                             </div>
 
                             <div class="form-group">

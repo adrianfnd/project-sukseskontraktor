@@ -40,6 +40,7 @@
                                 <table class="table table-bordered">
                                     <thead>
                                         <tr>
+                                            <th>Code Product</th>
                                             <th>Product</th>
                                             <th>Price</th>
                                             <th>Months Rented</th>
@@ -48,6 +49,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
+                                            <td>{{ $order->product->code }}</td>
                                             <td>{{ $order->product->name }}</td>
                                             <td>{{ 'Rp. ' . number_format($order->product->price, 0, ',', '.') }}</td>
                                             <td>{{ $order->months_rented }}</td>
@@ -57,7 +59,7 @@
                                     </tbody>
                                     <tfoot>
                                         <tr>
-                                            <th colspan="3" class="text-right">Grand Total:</th>
+                                            <th colspan="4" class="text-right">Grand Total:</th>
                                             <th>{{ 'Rp. ' . number_format($order->product->price * $order->months_rented, 0, ',', '.') }}
                                             </th>
                                         </tr>

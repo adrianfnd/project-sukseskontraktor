@@ -102,18 +102,29 @@
                             <div class="block2-pic hov-img0">
                                 <img src="/assets/products/{{ $product->image_url }}" alt="IMG-PRODUCT" width="200"
                                     height="200">
-                                <a href="#"
-                                    class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
-                                    style="margin: auto; text-align: center;" data-toggle="modal" data-target="#orderModal"
-                                    data-id="{{ $product->id }}" data-nama="{{ $product->name }}"
-                                    data-harga="{{ $product->price }}" data-category="{{ $product->category }}"
-                                    data-description="{{ $product->description }}" data-stock="{{ $product->stock }}"
-                                    data-manufacturer="{{ $product->manufacturer }}"
-                                    data-model-number="{{ $product->model_number }}"
-                                    data-warranty="{{ $product->warranty_months }}" data-weight="{{ $product->weight }}"
-                                    data-dimensions="{{ $product->dimensions }}">
-                                    Pesan Sekarang
-                                </a>
+
+                                @if ($product->available_stock > 0)
+                                    <a href="#"
+                                        class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04"
+                                        style="margin: auto; text-align: center;" data-toggle="modal"
+                                        data-target="#orderModal" data-id="{{ $product->id }}"
+                                        data-code="{{ $product->code }}" data-nama="{{ $product->name }}"
+                                        data-harga="{{ $product->price }}" data-category="{{ $product->category }}"
+                                        data-description="{{ $product->description }}"
+                                        data-stock="{{ $product->available_stock }}"
+                                        data-manufacturer="{{ $product->manufacturer }}"
+                                        data-model-number="{{ $product->model_number }}"
+                                        data-warranty="{{ $product->warranty_months }}"
+                                        data-weight="{{ $product->weight }}" data-dimensions="{{ $product->dimensions }}">
+                                        Pesan Sekarang
+                                    </a>
+                                @else
+                                    <a href="javascript:void(0);"
+                                        class="block2-btn flex-c-m stext-103 cl2 size-102 bg-secondary text-light bor2 disabled p-lr-15"
+                                        style="margin: auto; text-align: center; cursor: not-allowed;">
+                                        Not Available
+                                    </a>
+                                @endif
                             </div>
 
                             <div class="block2-txt flex-w flex-t p-t-14">
@@ -153,6 +164,7 @@
                             <div class="form-group">
                                 <label for="product-details">Detail Produk</label>
                                 <div id="product-details">
+                                    <p><strong>Kode Produk:</strong> <span id="product-code"></span></p>
                                     <p><strong>Nama Produk:</strong> <span id="product-name"></span></p>
                                     <p><strong>Harga:</strong> <span id="product-price"></span>/Bulan</p>
                                     <p><strong>Kategori:</strong> <span id="product-category"></span></p>
@@ -230,6 +242,7 @@
                         event.preventDefault();
 
                         var productId = button.getAttribute('data-id');
+                        var productCode = button.getAttribute('data-code');
                         var productName = button.getAttribute('data-nama');
                         var productPrice = button.getAttribute('data-harga');
                         var productCategory = button.getAttribute('data-category');
@@ -244,12 +257,15 @@
                         var productIdInput = document.getElementById('product-id');
                         productIdInput.value = productId;
 
+                        document.getElementById('product-code').textContent = productCode;
                         document.getElementById('product-name').textContent = productName;
                         document.getElementById('product-price').textContent = 'Rp ' + Number(
                             productPrice).toLocaleString();
                         document.getElementById('product-category').textContent = productCategory;
                         document.getElementById('product-description').textContent = productDescription;
-                        document.getElementById('product-stock').textContent = productStock;
+                        document.getElementById('product-stock').textContent = productStock == 1 ?
+                            'Tersedia' : 'Tidak Tersedia';
+
                         document.getElementById('product-manufacturer').textContent =
                             productManufacturer;
                         document.getElementById('product-model-number').textContent =
