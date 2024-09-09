@@ -95,6 +95,34 @@
                 </h3>
             </div>
 
+            <div class="container">
+                <div class="row mb-5">
+                    <div class="col-md-6">
+                        <form action="{{ route('home') }}" method="GET" class="form-inline justify-content-start">
+                            <div class="form-group mr-2">
+                                <select name="category" class="form-control">
+                                    <option value="">Semua Kategori ({{ $categories->sum() }})</option>
+                                    @foreach($categories as $category => $count)
+                                        <option value="{{ $category }}" {{ $selectedCategory == $category ? 'selected' : '' }}>
+                                            {{ $category }} ({{ $count }})
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary mr-2">Filter</button>
+                            <a href="{{ route('home') }}" class="btn btn-secondary">Reset</a>
+                        </form>
+                    </div>
+                </div>
+                @if($selectedCategory)
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <h4>Menampilkan produk dari kategori: {{ $selectedCategory }} ({{ $categories[$selectedCategory] ?? 0 }})</h4>
+                        </div>
+                    </div>
+                @endif
+            </div>
+
             <div class="row isotope-grid">
                 @foreach ($products as $product)
                     <div class="col-sm-6 col-md-4 col-lg-3 p-b-35 isotope-item">

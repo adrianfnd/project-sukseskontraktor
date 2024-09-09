@@ -28,7 +28,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
-            'category' => 'required|string',
+            // 'category' => 'required|string',
             'available_stock' => 'required|numeric',
             'manufacturer' => 'required|string',
             'model_number' => 'nullable|string',
@@ -42,6 +42,7 @@ class ProductController extends Controller
         $product = new Product($request->except('image'));
         $product->code = $request->code;
         $product->image_url = $imageName;
+        $product->category = $request->name;
         $product->created_by = Auth::id();
         $product->updated_by = Auth::id();
         $product->save();
@@ -68,7 +69,7 @@ class ProductController extends Controller
             'price' => 'required|numeric',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'description' => 'nullable|string',
-            'category' => 'required|string',
+            // 'category' => 'required|string',
             'available_stock' => 'required|numeric',
             'manufacturer' => 'required|string',
             'model_number' => 'nullable|string',
@@ -87,6 +88,7 @@ class ProductController extends Controller
         }
 
         $product->fill($request->except('image'));
+        $product->category = $request->name;
         $product->updated_by = Auth::id();
         $product->save();
 

@@ -44,14 +44,14 @@
                                     <p class="text-danger">{{ $errors->first('description') }}</p>
                                 @endif
 
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="category">Category:</label>
                                     <input type="text" class="form-control" id="category" name="category"
                                         value="{{ $product->category }}" required>
                                 </div>
                                 @if ($errors->has('category'))
                                     <p class="text-danger">{{ $errors->first('category') }}</p>
-                                @endif
+                                @endif -->
 
                                 <div class="form-group">
                                     <label for="available_stock">Stock:</label>
